@@ -21,14 +21,20 @@ export const reducer = (state = initialState, action) => {
   // console.log("reducer fired!", action);
   switch (action.type) {
     case "ADD_ITEM":
-      return {
-        ...state,
-        car: {
-          ...state.car,
-          price: state.car.price + action.payload.price,
-          features: [...state.car.features, action.payload]
-        }
-      };
+      if (
+        state.car.features.find(feature => feature.id === action.payload.id)
+      ) {
+        return state;
+      } else {
+        return {
+          ...state,
+          car: {
+            ...state.car,
+            price: state.car.price + action.payload.price,
+            features: [...state.car.features, action.payload]
+          }
+        };
+      }
     case "REMOVE_ITEM":
       return {
         ...state,
